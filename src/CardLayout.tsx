@@ -5,6 +5,7 @@ import {useState} from "react";
 import {Pagination} from "./components/Pagination";
 import {Select} from "./components/Select";
 
+
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -13,6 +14,11 @@ const GridContainer = styled.div`
   margin: 2rem 0;
 `;
 const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -35,6 +41,24 @@ const CardDescription = styled.p`
   font-size: 1rem;
   color: #666;
 `;
+
+const DisplayFilter = styled.div`
+  display: flex;
+  gap: 20px;
+`
+const FilterDisplay = styled.span`
+  display: flex;
+  gap: 10px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  border-radius: 35px;
+  box-shadow: 0px 0px 15px #e4e4e4;
+  color: #202129;
+  background-color: #e1e2e2;
+`
+
 
 export type CardData = {
     id: number;
@@ -63,17 +87,26 @@ const CardLayout = (props: CardLayoutProps) => {
     };
 
 
+    const [departmentValue, setDepartmentValue] = useState("");
+    const [authorValue, setAuthorValue] = useState("");
+
+
     return (
         <>
             <Heading/>
             <Search handleSearchChange={props.handleSearchChange}/>
-            <Select/>
-            <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <Select setDepart={setDepartmentValue} setAuthor={setAuthorValue}/>
+            <DisplayFilter>
+                {departmentValue && <FilterDisplay>{departmentValue}</FilterDisplay>}
+                {authorValue && <FilterDisplay>{authorValue}</FilterDisplay>}
+                <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            </DisplayFilter>
             <GridContainer>
                 {getCurrentPageCards().map((card) => (
                     <Card key={card.id}>
                         <CardTitle>{card.title}</CardTitle>
-                        <CardDescription>{card.description}</CardDescription>
+                        <button>Скачать</button>
+                        {/*<CardDescription>{card.description}</CardDescription>*/}
                     </Card>
                 ))}
             </GridContainer>
