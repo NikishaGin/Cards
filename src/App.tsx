@@ -1,0 +1,192 @@
+import CardLayout, {CardData} from "./CardLayout";
+import styled, {createGlobalStyle} from "styled-components";
+import {useState} from "react";
+
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    background: whitesmoke;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-family: 'Montserrat';
+    font-weight: normal;
+    color: #333;
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  h4 {
+    color: #444;
+    font-size: 1.5rem;
+    font-family: 'Montserrat';
+    font-weight: normal;
+    text-align: center;
+    margin: 2rem 0;
+  }
+`;
+
+const Container = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
+export const App = () => {
+
+    const [cards, setCards] = useState<CardData[]>([
+        {
+            id: 1,
+            title: 'Презентация: Будущее технологий',
+            description: 'Описание',
+            author: 'Иван Иванов',
+            department: 'Маркетинг'
+        },
+        {
+            id: 2,
+            title: 'Анализ данных: Шаг за шагом',
+            description: 'Описание',
+            author: 'Петр Петров',
+            department: 'Аналитика'
+        },
+        {
+            id: 3,
+            title: 'Управление проектами: Лучшая практика',
+            description: 'Описание',
+            author: 'Анна Смирнова',
+            department: 'Управление проектами'
+        },
+        {
+            id: 4,
+            title: 'Мотивация команды: Секрет успеха',
+            description: 'Описание',
+            author: 'Сергей Сергеев',
+            department: 'HR'
+        },
+        {id: 5, title: 'Дизайн и инновации', description: 'Описание', author: 'Елена Иванова', department: 'Дизайн'},
+        {
+            id: 6,
+            title: 'Стратегии роста компании',
+            description: 'Описание',
+            author: 'Марина Левина',
+            department: 'Стратегия'
+        },
+        {
+            id: 7,
+            title: 'Современные тренды UX/UI',
+            description: 'Описание',
+            author: 'Дмитрий Воронцов',
+            department: 'UX/UI'
+        },
+        {
+            id: 8,
+            title: 'Кибербезопасность: Основы',
+            description: 'Описание',
+            author: 'Олег Козлов',
+            department: 'Безопасность'
+        },
+        {
+            id: 9,
+            title: 'Эффективная коммуникация',
+            description: 'Описание',
+            author: 'Наталья Белова',
+            department: 'Коммуникации'
+        },
+        {id: 10, title: 'Психология лидерства', description: 'Описание', author: 'Игорь Степанов', department: 'HR'},
+        {
+            id: 11,
+            title: 'Технологии будущего',
+            description: 'Описание',
+            author: 'Антон Михайлов',
+            department: 'Инновации'
+        },
+        {
+            id: 12,
+            title: 'Введение в искусственный интеллект',
+            description: 'Описание',
+            author: 'Ольга Григорьева',
+            department: 'ИТ'
+        },
+        {
+            id: 13,
+            title: 'Путь к устойчивому развитию',
+            description: 'Описание',
+            author: 'Дмитрий Романов',
+            department: 'Экология'
+        },
+        {
+            id: 14,
+            title: 'Финансовая грамотность для всех',
+            description: 'Описание',
+            author: 'Мария Алексеева',
+            department: 'Финансы'
+        },
+        {
+            id: 15,
+            title: 'Эффективные подходы к обучению',
+            description: 'Описание',
+            author: 'Василиса Кузнецова',
+            department: 'Образование'
+        },
+        {
+            id: 16,
+            title: 'Маркетинг в цифровом мире',
+            description: 'Описание',
+            author: 'Александр Сидоров',
+            department: 'Маркетинг'
+        },
+        {
+            id: 17,
+            title: 'Будущее работы: Что нас ждёт?',
+            description: 'Описание',
+            author: 'Виктор Новиков',
+            department: 'HR'
+        },
+        {
+            id: 18,
+            title: 'Инновационные подходы к образованию',
+            description: 'Описание',
+            author: 'Маргарита Мельникова',
+            department: 'Образование'
+        },
+        {
+            id: 19,
+            title: 'Энергия и экология',
+            description: 'Описание',
+            author: 'Владимир Иванов',
+            department: 'Экология'
+        },
+        {
+            id: 20,
+            title: 'Личностный рост и саморазвитие',
+            description: 'Описание',
+            author: 'Екатерина Гордеева',
+            department: 'Личностное развитие'
+        },
+    ])
+
+
+    // фильтрация карточек зависит от значения состояния поиска
+    const [searchTitle, setSearchTitle] = useState<string>('');
+
+    const handleSearchChange = (title: string) => {
+        setSearchTitle(title);
+    };
+
+    const filteredCard = cards.filter(el => el.title.toLowerCase().includes(searchTitle))
+
+
+    return (
+        <Container>
+            <GlobalStyle/>
+            <CardLayout cards={filteredCard} handleSearchChange={handleSearchChange}/>
+        </Container>
+    )
+}

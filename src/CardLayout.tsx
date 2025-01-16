@@ -1,0 +1,84 @@
+import styled from "styled-components";
+import {Heading} from "./components/Heading";
+import {Search} from "./components/Search";
+import {useState} from "react";
+import {Pagination} from "./components/Pagination";
+import {Select} from "./components/Select";
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 280px);
+  gap: 25px;
+  margin: 2rem 0;
+`;
+const Card = styled.div`
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+const CardTitle = styled.h3`
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: #333;
+`;
+const CardDescription = styled.p`
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+`;
+
+export type CardData = {
+    id: number;
+    title: string;
+    description: string;
+}
+
+type CardLayoutProps = {
+    cards: CardData[];
+    handleSearchChange: (title: string) => void
+}
+
+const CardLayout = (props: CardLayoutProps) => {
+
+    // currentPage — номер текущей страницы (начальное значение: 1).
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 8; // Количество элементов на одной странице
+
+    // Рассчитываем общее количество страниц для пагинации,
+    const totalPages = Math.ceil(props.cards.length / pageSize);
+
+    // Функция для получения карточек текущей страницы
+    const getCurrentPageCards = () => {
+        const startIndex = (currentPage - 1) * pageSize;
+        return props.cards.slice(startIndex, startIndex + pageSize);
+    };
+
+
+    return (
+        <>
+            <Heading/>
+            <Search handleSearchChange={props.handleSearchChange}/>
+            <Select/>
+            <Pagination currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage}/>
+            <GridContainer>
+                {getCurrentPageCards().map((card) => (
+                    <Card key={card.id}>
+                        <CardTitle>{card.title}</CardTitle>
+                        <CardDescription>{card.description}</CardDescription>
+                    </Card>
+                ))}
+            </GridContainer>
+        </>
+    );
+};
+
+export default CardLayout;
