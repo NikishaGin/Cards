@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
+  margin-left: auto;
   display: flex;
   justify-content: end;
   align-items: center;

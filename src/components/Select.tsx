@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {ChangeEvent} from "react";
+import {UniversalSelect} from "./UniversalSelect";
 
 const SelectContainer = styled.div`
   display: flex;
@@ -6,25 +8,6 @@ const SelectContainer = styled.div`
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
 `
-const StyledSelect = styled.select`
-  margin-right: 20px;
-  appearance: none;
-  background-color: transparent;
-  color: #333;
-  font-size: 14px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 35px;
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-
-  &:hover {
-    border-color: #b5b5b5;
-    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.1);
-  }
-`;
-
 const ButtonRegular = styled.button`
   margin-left: auto;
   color: #333;
@@ -52,29 +35,54 @@ const ButtonRegular = styled.button`
   }
 `;
 
-const StyledOption = styled.option`
-  color: #202129;
-  background-color: #f2f2f2;
-`;
 
-export const Select = () => {
+type PropsType = {
+    setDepart: (departmentValue: string) => void
+    setAuthor: (authorValue: string) => void
+
+}
+
+export const Select = (props: PropsType) => {
+
+    const department = [
+        {name: 'Общий отдел'},
+        {name: 'Отдел обеспечения'},
+        {name: 'Отдел цифоровой трансформации'},
+        {name: 'Отдел сопровождения ЕНС'},
+        {name: 'Отдел анализа больших данных'},
+        {name: 'Отдел информационной безопасности и информационных технологий'},
+        {name: 'Аналитический отдел'},
+        {name: 'Отдел разработки и развития сервисов'},
+        {name: 'Отдел работы с производным долгом'},
+        {name: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности'},
+    ]
+
+    const authors = [
+        {name: 'Баландина Ирина Михайловна'},
+        {name: 'Ткач Анна Евгеньевна'},
+        {name: 'Амелин Анатолий Сергеевич'},
+        {name: 'Воронина Светлана Владимировна'},
+        {name: 'Истомин Сергей Юрьевич'},
+        {name: 'Затеев Андрей Николаевич'},
+        {name: 'Шувалов Михаил Юрьевич'},
+        {name: 'Либик Елена Вячеславовна'},
+        {name: 'Потапова Светлана Михайловна'},
+        {name: 'Зарубина Анна Витальевна'},
+    ]
+
+
+    const onChangeDepartment = (event: ChangeEvent<HTMLSelectElement>) => {
+        props.setDepart(event.currentTarget.value);
+    };
+
+    const onChangeAuthor = (event: ChangeEvent<HTMLSelectElement>) => {
+        props.setAuthor(event.currentTarget.value);
+    };
+
     return (
         <SelectContainer>
-            <StyledSelect>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-                <StyledOption value="option1">Дата публикации</StyledOption>
-            </StyledSelect>
-            <StyledSelect>
-                <StyledOption value="option1">Отдел</StyledOption>
-            </StyledSelect>
-            <StyledSelect>
-                <StyledOption value="option1">Автор</StyledOption>
-            </StyledSelect>
+            <UniversalSelect title={'Отдел'} date={department} onChange={onChangeDepartment}/>
+            <UniversalSelect title={'Автор'} date={authors} onChange={onChangeAuthor}/>
             <ButtonRegular>Очистить</ButtonRegular>
         </SelectContainer>
     );
