@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styled, {keyframes} from 'styled-components';
 import uploadIcon from '../assets/upload.svg'
 import pdfIcon from '../assets/filetype-pdf.svg'
@@ -59,8 +59,11 @@ const ModalOverlay = styled.div`
     justify-content: center;
     align-items: center;
     animation: ${fadeIn} 0.3s ease-out;
+    overflow-y:auto;
+    z-index: 1000;
 `;
 const Modal = styled.div`
+    margin-top: 50px;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -210,8 +213,8 @@ const DropdownItem = styled.option`
 `;
 //превью изображения
 const PreviewImage = styled.img`
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 900px;
+    max-height: 900px;
     border-radius: 10px;
     border: 2px solid #ddd;
 `;
@@ -243,7 +246,6 @@ const NotificationContainer = styled.div<{ isVisible: boolean }>`
     font-size: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: ${({isVisible}) => (isVisible ? slideDown : slideUp)} 0.5s ease;
-    z-index: 1000;
 `;
 
 //тип для объектов авторы и отделы
@@ -252,7 +254,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (id: number, title: string, description: string, author: string, department: string) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string, file: File | null) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
@@ -270,7 +272,13 @@ export function Modalwindow(props: PropsType) {
 
     //логика модального окна
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => setIsModalOpen(true);
+    const openModal = () => {
+        setIsModalOpen(true);
+        window.scroll({
+            top: 0,
+            behavior: 'smooth', // Плавная анимация
+        })
+    }
     const closeModal = () => {
         setIsModalOpen(false)
         setTitleText('')
@@ -278,7 +286,7 @@ export function Modalwindow(props: PropsType) {
         setSelectedAutors('')
         setdescriptionText('')
         setImage('')
-        setSelectedFile('')
+        setSelectedFile(null)
     }
     //закрывать модальное окно по клику мне него
     // const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -308,13 +316,13 @@ export function Modalwindow(props: PropsType) {
     }
 
     //загрузка фотографии и файла
-    const [image, setImage] = useState<string | null>('');
+    const [image, setImage] = useState<string | ''>('');
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             const isValidFormat = file.type === "image/png" || file.type === "image/jpeg";
             if (!isValidFormat) {
-                setImage(null);
+                setImage('');
                 return;
             }
 
@@ -326,7 +334,7 @@ export function Modalwindow(props: PropsType) {
         }
     };
 
-    const [selectedFile, setSelectedFile] = useState<File | ''>('');
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -342,10 +350,10 @@ export function Modalwindow(props: PropsType) {
         selectedAutors !== '' &&
         descriptionText !== '' &&
         image !== '' &&
-        selectedFile !== ''
+        selectedFile !== null
     )
     const onClickHandler = () => {
-        props.addPost(1, titleText, descriptionText, selectedAutors, selectedDepart)
+        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, image, selectedFile)
         closeModal()
         handleClick()
     }

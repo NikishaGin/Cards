@@ -2,6 +2,7 @@ import CardLayout, {CardData} from "./CardLayout";
 import styled, {createGlobalStyle} from "styled-components";
 import {useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
+import {v1} from "uuid";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -44,133 +45,96 @@ export const App = () => {
 
     const [cards, setCards] = useState<CardData[]>([
         {
-            id: 1,
+            id: v1(),
             title: 'Презентация: Будущее технологий',
             description: 'Описание',
-            author: 'Иван Иванов',
-            department: 'Маркетинг'
+            author: 'Баландина Ирина Михайловна',
+            department: 'Отдел разработки и развития сервисов',
+            image: '../src/assets/imgBD/imageBD1.png',
+            file: '../src/assets/imgBD/FNS.pdf'
         },
         {
-            id: 2,
+            id: v1(),
             title: 'Анализ данных: Шаг за шагом',
             description: 'Описание',
-            author: 'Петр Петров',
-            department: 'Аналитика'
+            author: 'Ткач Анна Евгеньевна',
+            department: 'Отдел работы с производным долгом',
+            image: '../src/assets/imgBD/imageBD2.png',
+            file: ''
         },
         {
-            id: 3,
+            id: v1(),
             title: 'Управление проектами: Лучшая практика',
             description: 'Описание',
-            author: 'Анна Смирнова',
-            department: 'Управление проектами'
+            author: 'Амелин Анатолий Сергеевич',
+            department: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности',
+            image: '../src/assets/imgBD/imageBD9.jpg',
+            file: ''
         },
         {
-            id: 4,
+            id: v1(),
             title: 'Мотивация команды: Секрет успеха',
             description: 'Описание',
-            author: 'Сергей Сергеев',
-            department: 'HR'
+            author: 'Воронина Светлана Владимировна',
+            department: 'Отдел информационной безопасности и информационных технологий',
+            image: '../src/assets/imgBD/imageBD4.jpg',
+            file: ''
         },
-        {id: 5, title: 'Дизайн и инновации', description: 'Описание', author: 'Елена Иванова', department: 'Дизайн'},
         {
-            id: 6,
+            id: v1(),
+            title: 'Дизайн и инновации',
+            description: 'Описание',
+            author: 'Воронина Светлана Владимировна',
+            department: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности',
+            image: '../src/assets/imgBD/imageBD5.png',
+            file: ''
+        },
+        {
+            id: v1(),
             title: 'Стратегии роста компании',
             description: 'Описание',
-            author: 'Марина Левина',
-            department: 'Стратегия'
+            author: 'Затеев Андрей Николаевич',
+            department: 'Отдел сопровождения ЕНС',
+            image: '../src/assets/imgBD/imageBD6.jpg',
+            file: ''
         },
         {
-            id: 7,
+            id: v1(),
             title: 'Современные тренды UX/UI',
             description: 'Описание',
-            author: 'Дмитрий Воронцов',
-            department: 'UX/UI'
+            author: 'Шувалов Михаил Юрьевичв',
+            department: 'Отдел цифоровой трансформации',
+            image: '../src/assets/imgBD/imageBD7.jpg',
+            file: ''
         },
         {
-            id: 8,
+            id: v1(),
             title: 'Кибербезопасность: Основы',
             description: 'Описание',
-            author: 'Олег Козлов',
-            department: 'Безопасность'
+            author: 'Либик Елена Вячеславовна',
+            department: 'Отдел обеспечения',
+            image: '../src/assets/imgBD/imageBD8.jpg',
+            file: ''
         },
         {
-            id: 9,
+            id: v1(),
             title: 'Эффективная коммуникация',
             description: 'Описание',
-            author: 'Наталья Белова',
-            department: 'Коммуникации'
-        },
-        {id: 10, title: 'Психология лидерства', description: 'Описание', author: 'Игорь Степанов', department: 'HR'},
-        {
-            id: 11,
-            title: 'Технологии будущего',
-            description: 'Описание',
-            author: 'Антон Михайлов',
-            department: 'Инновации'
+            author: 'Потапова Светлана Михайловна',
+            department: 'Общий отдел',
+            image: '../src/assets/imgBD/imageBD9.jpg',
+            file: ''
         },
         {
-            id: 12,
-            title: 'Введение в искусственный интеллект',
+            id: v1(),
+            title: 'Психология лидерства',
             description: 'Описание',
-            author: 'Ольга Григорьева',
-            department: 'ИТ'
+            author: 'Зарубина Анна Витальевна',
+            department: 'Отдел сопровождения ЕНС',
+            image: '../src/assets/imgBD/imageBD10.jpeg',
+            file: ''
         },
-        {
-            id: 13,
-            title: 'Путь к устойчивому развитию',
-            description: 'Описание',
-            author: 'Дмитрий Романов',
-            department: 'Экология'
-        },
-        {
-            id: 14,
-            title: 'Финансовая грамотность для всех',
-            description: 'Описание',
-            author: 'Мария Алексеева',
-            department: 'Финансы'
-        },
-        {
-            id: 15,
-            title: 'Эффективные подходы к обучению',
-            description: 'Описание',
-            author: 'Василиса Кузнецова',
-            department: 'Образование'
-        },
-        {
-            id: 16,
-            title: 'Маркетинг в цифровом мире',
-            description: 'Описание',
-            author: 'Александр Сидоров',
-            department: 'Маркетинг'
-        },
-        {
-            id: 17,
-            title: 'Будущее работы: Что нас ждёт?',
-            description: 'Описание',
-            author: 'Виктор Новиков',
-            department: 'HR'
-        },
-        {
-            id: 18,
-            title: 'Инновационные подходы к образованию',
-            description: 'Описание',
-            author: 'Маргарита Мельникова',
-            department: 'Образование'
-        },
-        {
-            id: 19,
-            title: 'Энергия и экология',
-            description: 'Описание',
-            author: 'Владимир Иванов',
-            department: 'Экология'
-        },
-        {
-            id: 20,
-            title: 'Личностный рост и саморазвитие',
-            description: 'Описание',
-            author: 'Екатерина Гордеева',
-            department: 'Личностное развитие'
-        },
+
     ])
     const department = [
         {name: 'Общий отдел'},
@@ -198,27 +162,48 @@ export const App = () => {
     ]
 
 
-
     // фильтрация карточек зависит от значения состояния поиска
     const [searchTitle, setSearchTitle] = useState<string>('');
+    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
+    const [selectedAuthor, setSelectedAuthor] = useState<string>('');
 
     const handleSearchChange = (title: string) => {
-        setSearchTitle(title);
+        setSearchTitle(title.toLowerCase());
     };
 
-    const filteredCard = cards.filter(el => el.title.toLowerCase().includes(searchTitle))
+    const handleDepartmentChange = (department: string) => {
+        setSelectedDepartment(department.toLowerCase());
+    };
 
+    const handleAuthorChange = (author: string) => {
+        setSelectedAuthor(author.toLowerCase());
+    };
+    const filteredCards = cards.filter(card => {
+        return (
+            (searchTitle === '' || card.title.toLowerCase().includes(searchTitle)) &&
+            (selectedDepartment === '' || card.department.toLowerCase().includes(selectedDepartment)) &&
+            (selectedAuthor === '' || card.author.toLowerCase().includes(selectedAuthor))
+        );
+    });
+
+
+    const test = (DepartmentValue: string, AuthorValue: string) => {
+        setSelectedDepartment(DepartmentValue)
+        setSelectedAuthor(AuthorValue)
+    }
 
     //добавление презентации в бд
-    const addPost = (id: number, title: string, description: string, author: string, department: string) => {
+    const addPost = (title: string, description: string, author: string, department: string, image: string, file: File | null) => {
         const newPost = {
-            id,
+            id: v1(),
             title,
             description,
             author,
-            department
+            department,
+            image,
+            file
         }
-        setCards([...cards, newPost])
+        setCards([newPost, ...cards])
     }
 
     return (
@@ -229,7 +214,12 @@ export const App = () => {
                 authors={authors}
             />
             <GlobalStyle/>
-            <CardLayout cards={filteredCard} handleSearchChange={handleSearchChange}/>
+            <CardLayout cards={filteredCards}
+                        handleSearchChange={handleSearchChange}
+                        handleDepartmentChange={handleDepartmentChange}
+                        handleAuthorChange={handleAuthorChange}
+                        test={test}
+            />
         </Container>
     )
 }

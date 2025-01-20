@@ -97,7 +97,6 @@ type CardLayoutProps = {
     handleSearchChange: (title: string) => void
     handleDepartmentChange: (department: string) => void
     handleAuthorChange: (author: string) => void
-    test: (DepartmentValue: string, AuthorValue: string) => void
 
 }
 
@@ -145,7 +144,6 @@ const CardLayout = (props: CardLayoutProps) => {
                     handleAuthorChange={props.handleAuthorChange}
                     handleSearchChange={props.handleSearchChange}
                     setTitle={setTitle}
-                    test={props.test}
 
             />
             <DisplayFilter>

@@ -37,9 +37,13 @@ const ButtonRegular = styled.button`
 
 
 type PropsType = {
-    setDepart: (departmentValue: string) => void
-    setAuthor: (authorValue: string) => void
-
+    setDepartmentValue: (departmentValue: string) => void
+    setAuthorValue: (authorValue: string) => void
+    handleDepartmentChange: (department: string) => void
+    handleAuthorChange: (author: string) => void
+    handleSearchChange: (title: string) => void
+    setTitle: (title: string) => void
+    test: (DepartmentValue: string, AuthorValue: string) => void
 }
 
 export const Select = (props: PropsType) => {
@@ -72,18 +76,28 @@ export const Select = (props: PropsType) => {
 
 
     const onChangeDepartment = (event: ChangeEvent<HTMLSelectElement>) => {
-        props.setDepart(event.currentTarget.value);
+        props.setDepartmentValue(event.currentTarget.value);
+        props.handleDepartmentChange(event.currentTarget.value)
     };
 
     const onChangeAuthor = (event: ChangeEvent<HTMLSelectElement>) => {
-        props.setAuthor(event.currentTarget.value);
+        props.setAuthorValue(event.currentTarget.value);
+        props.handleAuthorChange(event.currentTarget.value)
     };
+    const clearFilters = () => {
+        props.setDepartmentValue('');
+        props.setAuthorValue('');
+        props.handleSearchChange('')
+        props.setTitle('')
+        props.test('', '')
+    }
+
 
     return (
         <SelectContainer>
             <UniversalSelect title={'Отдел'} date={department} onChange={onChangeDepartment}/>
             <UniversalSelect title={'Автор'} date={authors} onChange={onChangeAuthor}/>
-            <ButtonRegular>Очистить</ButtonRegular>
+            <ButtonRegular onClick={clearFilters}>Очистить</ButtonRegular>
         </SelectContainer>
     );
 };

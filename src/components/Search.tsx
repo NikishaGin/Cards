@@ -42,20 +42,22 @@ const SearchInput = styled.input`
 
 type PropsType = {
     handleSearchChange: (title: string) => void
+    title: string
+    setTitle: (title: string) => void
 }
 
 export const Search = (props: PropsType ) => {
 
-    const [title, setTitle] = useState('')
+
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.currentTarget.value)
+        props.setTitle(event.currentTarget.value)
         props.handleSearchChange(event.currentTarget.value)
     }
 
     return (
         <InputContainer>
-            <SearchInput placeholder="Поиск..." value={title} onChange={onChangeHandler}/>
+            <SearchInput placeholder="Поиск..." value={props.title} onChange={onChangeHandler}/>
         </InputContainer>
     );
 };
