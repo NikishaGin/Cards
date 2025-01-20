@@ -39,6 +39,8 @@ const ButtonRegular = styled.button`
 type PropsType = {
     setDepart: (departmentValue: string) => void
     setAuthor: (authorValue: string) => void
+    handleDepartmentChange: (department: string) => void
+    handleAuthorChange: (author: string) => void
 
 }
 
@@ -73,10 +75,12 @@ export const Select = (props: PropsType) => {
 
     const onChangeDepartment = (event: ChangeEvent<HTMLSelectElement>) => {
         props.setDepart(event.currentTarget.value);
+        props.handleDepartmentChange(event.currentTarget.value)
     };
 
     const onChangeAuthor = (event: ChangeEvent<HTMLSelectElement>) => {
         props.setAuthor(event.currentTarget.value);
+        props.handleAuthorChange(event.currentTarget.value)
     };
 
     return (

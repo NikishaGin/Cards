@@ -64,11 +64,15 @@ export type CardData = {
     id: number;
     title: string;
     description: string;
+    author: string
+    department: string
 }
 
 type CardLayoutProps = {
     cards: CardData[];
     handleSearchChange: (title: string) => void
+    handleDepartmentChange: (department: string) => void
+    handleAuthorChange: (author: string) => void
 }
 
 const CardLayout = (props: CardLayoutProps) => {
@@ -95,7 +99,11 @@ const CardLayout = (props: CardLayoutProps) => {
         <>
             <Heading/>
             <Search handleSearchChange={props.handleSearchChange}/>
-            <Select setDepart={setDepartmentValue} setAuthor={setAuthorValue}/>
+            <Select setDepart={setDepartmentValue}
+                    setAuthor={setAuthorValue}
+                    handleDepartmentChange={props.handleDepartmentChange}
+                    handleAuthorChange={props.handleAuthorChange}
+            />
             <DisplayFilter>
                 {departmentValue && <FilterDisplay>{departmentValue}</FilterDisplay>}
                 {authorValue && <FilterDisplay>{authorValue}</FilterDisplay>}
