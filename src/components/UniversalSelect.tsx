@@ -3,7 +3,6 @@ import {ChangeEvent} from "react";
 
 
 const StyledSelect = styled.select`
-  margin-right: 20px;
   appearance: none;
   background-color: transparent;
   color: #333;
@@ -13,13 +12,20 @@ const StyledSelect = styled.select`
   border-radius: 35px;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  //transition: border-color 0.3s, box-shadow 0.3s;
+  transition: all 200ms linear;
   width: 100px;
   
 
   &:hover {
-    border-color: #b5b5b5;
-    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    background: linear-gradient(45deg, #b7d9f2 0%, #94c6e6 50%, #74accf 100%);
+    //border-color: #b5b5b5;
+    //box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background-color: #d5d6d6;
   }
 `;
 const StyledOption = styled.option`

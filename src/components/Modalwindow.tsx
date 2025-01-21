@@ -7,245 +7,254 @@ import imgloadIcon from '../assets/image-fill.svg'
 
 //контейнер
 const Container = styled.div`
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    max-height: 400px;
-    background-color: #031D84;
-    margin-top: 30px;
-    border-radius: 30px;
-    padding-bottom: 50px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-height: 400px;
+  margin-top: 30px;
+  border-radius: 30px;
+  padding-bottom: 50px;
+  
+  
+  background: -webkit-linear-gradient(45deg, #0056b3 0%, #4f6f8f 100%);
+  background: -o-linear-gradient(45deg, #0056b3 0%, #4f6f8f 100%);
+  background: linear-gradient(45deg, #0056b3 0%, #4f6f8f 100%);
+  
 `;
 //кнопка для вызова модального окна
 const Button = styled.div`
-    padding: 10px 20px;
-    margin: 20px 0;
-    font-size: 16px;
-    font-family: 'Montserrat';
-    background-color: #22C55E;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px 20px;
+  margin: 20px 0;
+  font-size: 16px;
+  font-family: 'Montserrat';
+  //background-color: #22C55E;
+  //background-color: #207239;
+  //background: linear-gradient(135deg, #4f6f8f, #0056b3);
+  background: linear-gradient(135deg, #4a90d9, #83a6bf);
+  //background-color: #D1E7FF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-    &:hover {
-        background-color: green;
-    }
+  &:hover {
+    background: linear-gradient(135deg, #3d78b2, #6b8eaa);
+  }
 `;
 //анимация появления модального окна
 const fadeIn = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 //модальное окно
 const ModalOverlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: ${fadeIn} 0.3s ease-out;
-    overflow-y:auto;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${fadeIn} 0.3s ease-out;
+  overflow-y: auto;
+  z-index: 1000;
 `;
 const Modal = styled.div`
-    margin-top: 50px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 const ModalContent = styled.div`
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
 //заголовок в модальном окне
 const Title = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    font-size: 1.25rem;
-    color: #333;
-    font-weight: bold;
-    font-family: 'Montserrat';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: bold;
+  font-family: 'Montserrat';
 `
 //описание в модальном окне
 const Text = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    color: #666;
-    font-family: 'Montserrat';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #666;
+  font-family: 'Montserrat';
 `
 //контейнер селектора
 const InputContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
 `
 //описание презентации
 const Description = styled.input`
-    padding-left: 10px;
-    margin-top: 10px;
-    width: 80%;
-    height: 10vh;
-    border: 1px solid #333;
-    border-radius: 8px;
-    background-color: white;
-    color: #333;
-    font-family: 'Montserrat';
+  padding-left: 10px;
+  margin-top: 10px;
+  width: 80%;
+  height: 10vh;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  font-family: 'Montserrat';
 `
 const Presname = styled.input`
-    padding-left: 10px;
-    margin-top: 10px;
-    width: 80%;
-    height: 5vh;
-    border: 1px solid gray;
-    border-radius: 8px;
-    background-color: white;
-    color: #333;
-    font-family: 'Montserrat';
+  padding-left: 10px;
+  margin-top: 10px;
+  width: 80%;
+  height: 5vh;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  font-family: 'Montserrat';
 `
 //кнопки загрузки изображения и файла
 const UploadImageBtn = styled.div`
-    display: flex;
-    width: 30px;
-    height: 30px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #4de84d;
-    cursor: pointer;
-    outline: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #4de84d;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-    &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-    }
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  }
 
-    &:active {
-        transform: translateY(0);
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
 `
 //контейнер кнопок
 const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-inline: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 50px;
 `
 //кнопка отправки презентации и отмены
 const ButtonSendClose = styled.button`
-    max-width: 150px;
-    background: white;
-    color: #48d848;
-    font-size: 16px;
-    font-family: 'Montserrat';
-    padding: 12px 24px;
-    border: 2px solid #48d848;
-    border-radius: 35px;
-    cursor: pointer;
-    outline: none;
-    transition: all 200ms linear;
-    box-shadow: 0px 0px 15px #e4e4e4;
+  max-width: 150px;
+  background: white;
+  color: #48d848;
+  font-size: 16px;
+  font-family: 'Montserrat';
+  padding: 12px 24px;
+  border: 2px solid #48d848;
+  border-radius: 35px;
+  cursor: pointer;
+  outline: none;
+  transition: all 200ms linear;
+  box-shadow: 0px 0px 15px #e4e4e4;
 
-    &:hover {
-        color: white;
-        background-color: #48d848;
-    }
+  &:hover {
+    color: white;
+    background-color: #48d848;
+  }
 
-    &:active {
-        background-color: #40c140;
-    }
+  &:active {
+    background-color: #40c140;
+  }
 
-    &:focus {
-        outline: 1px dotted #959595;
-    }
+  &:focus {
+    outline: 1px dotted #959595;
+  }
 `;
 //селектор отдела и автора
 const Dropdown = styled.select`
-    appearance: none;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid gray;
-    background-color: white;
-    border-radius: 8px;
-    color: #333;
-    cursor: pointer;
-    width: 100%;
-    font-family: 'Montserrat';
+  appearance: none;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid gray;
+  background-color: white;
+  border-radius: 8px;
+  color: #333;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Montserrat';
 `;
 const DropdownItem = styled.option`
-    color: #333;
-    padding: 8px;
-    cursor: pointer;
-    font-family: 'Montserrat';
+  color: #333;
+  padding: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat';
 
-    &:hover {
-        background: black;
-    }
+  &:hover {
+    background: black;
+  }
 `;
 //превью изображения
 const PreviewImage = styled.img`
-    max-width: 900px;
-    max-height: 900px;
-    border-radius: 10px;
-    border: 2px solid #ddd;
+  max-width: 900px;
+  max-height: 900px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
 `;
 // Анимации иконки успешной отправки
 const slideDown = keyframes`
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 `;
 const slideUp = keyframes`
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-100%);
-    }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 `;
 // Стили выплывающей иконки
 const NotificationContainer = styled.div<{ isVisible: boolean }>`
-    background-color: #4caf50;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: ${({isVisible}) => (isVisible ? slideDown : slideUp)} 0.5s ease;
+  background-color: #4caf50;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: ${({isVisible}) => (isVisible ? slideDown : slideUp)} 0.5s ease;
 `;
 
 //тип для объектов авторы и отделы
@@ -254,7 +263,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string, file: File | null) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string, file: string) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
@@ -368,23 +377,20 @@ export function Modalwindow(props: PropsType) {
             )}
             {/*синее поле с тектстои и кнопкой открытия модального окна*/}
             <h1 style={{
-                color: 'white',
+                color: '#D1E7FF',
                 fontSize: '70px',
                 fontWeight: 'bold',
                 maxWidth: '750px',
                 textAlign: 'center',
                 marginBottom: '0',
             }}>Библиотека презентаций МИУДОЛ</h1>
-            <h2 style={{
-                color: '#8896AB',
-                fontSize: '20px',
-                maxWidth: '400px',
-                textAlign: 'center',
-                marginBottom: '20px'
-            }}>Быстрый доступ ко всем необходимым материалам для эффективной работы</h2>
+            <h4 style={{
+                color: '#C0C0C0',
+
+            }}>Быстрый доступ ко всем необходимым материалам для эффективной работы</h4>
             <Button onClick={openModal}>Отправить презентацию</Button>
             <p style={{
-                color: '#8896AB',
+                color: '#E6E6FA',
                 fontSize: '14px',
 
             }}>Загружайте и скачивайте нужные материалы за секунды</p>

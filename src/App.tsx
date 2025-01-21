@@ -6,39 +6,40 @@ import {v1} from "uuid";
 
 
 const GlobalStyle = createGlobalStyle`
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    html, body {
-        background: whitesmoke;
-        min-height: 100vh;
-    }
+  html, body {
+    //background: whitesmoke;
+    min-height: 100vh;
+    background: linear-gradient(45deg, whitesmoke 0%, #cce7ff 50%, #a2c3e8 100%);
+  }
 
-    h1 {
-        font-size: 2.5rem;
-        font-family: 'Montserrat';
-        font-weight: normal;
-        color: #333;
-        text-align: center;
-        margin: 2rem 0;
-    }
+  h1 {
+    font-size: 2.5rem;
+    font-family: 'Montserrat';
+    font-weight: normal;
+    color: #333;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
 
-    h4 {
-        color: #444;
-        font-size: 1.5rem;
-        font-family: 'Montserrat';
-        font-weight: normal;
-        text-align: center;
-        margin: 2rem 0;
-    }
+  h4 {
+    color: #444;
+    font-size: 1.5rem;
+    font-family: 'Montserrat';
+    font-weight: normal;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
 `;
 
 const Container = styled.div`
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 `
 
 export const App = () => {
@@ -51,7 +52,7 @@ export const App = () => {
             author: 'Баландина Ирина Михайловна',
             department: 'Отдел разработки и развития сервисов',
             image: '../src/assets/imgBD/imageBD1.png',
-            file: '../src/assets/imgBD/FNS.pdf'
+            file: ''
         },
         {
             id: v1(),
@@ -134,8 +135,8 @@ export const App = () => {
             image: '../src/assets/imgBD/imageBD10.jpeg',
             file: ''
         },
-
     ])
+
     const department = [
         {name: 'Общий отдел'},
         {name: 'Отдел обеспечения'},
@@ -162,47 +163,9 @@ export const App = () => {
     ]
 
 
-    // фильтрация карточек зависит от значения состояния поиска
-    const [searchTitle, setSearchTitle] = useState<string>('');
-    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
-    const [selectedAuthor, setSelectedAuthor] = useState<string>('');
-
-    const handleSearchChange = (title: string) => {
-        setSearchTitle(title.toLowerCase());
-    };
-
-    const handleDepartmentChange = (department: string) => {
-        setSelectedDepartment(department.toLowerCase());
-    };
-
-    const handleAuthorChange = (author: string) => {
-        setSelectedAuthor(author.toLowerCase());
-    };
-    const filteredCards = cards.filter(card => {
-        return (
-            (searchTitle === '' || card.title.toLowerCase().includes(searchTitle)) &&
-            (selectedDepartment === '' || card.department.toLowerCase().includes(selectedDepartment)) &&
-            (selectedAuthor === '' || card.author.toLowerCase().includes(selectedAuthor))
-        );
-    });
-
-
-    const test = (DepartmentValue: string, AuthorValue: string) => {
-        setSelectedDepartment(DepartmentValue)
-        setSelectedAuthor(AuthorValue)
-    }
-
     //добавление презентации в бд
-    const addPost = (title: string, description: string, author: string, department: string, image: string, file: File | null) => {
-        const newPost = {
-            id: v1(),
-            title,
-            description,
-            author,
-            department,
-            image,
-            file
-        }
+    const addPost = (title: string, description: string, author: string, department: string, image: string, file: string) => {
+        const newPost: CardData = {id: v1(), title, description, author, department, image, file}
         setCards([newPost, ...cards])
     }
 
@@ -214,12 +177,7 @@ export const App = () => {
                 authors={authors}
             />
             <GlobalStyle/>
-            <CardLayout cards={filteredCards}
-                        handleSearchChange={handleSearchChange}
-                        handleDepartmentChange={handleDepartmentChange}
-                        handleAuthorChange={handleAuthorChange}
-                        test={test}
-            />
+            <CardLayout cards={cards}/>
         </Container>
     )
 }

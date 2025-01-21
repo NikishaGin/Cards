@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import {ChangeEvent} from "react";
 import {UniversalSelect} from "./UniversalSelect";
+import {Search} from "./Search";
 
 const SelectContainer = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
+  margin: 30px 0;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 50px;
 `
+
 const ButtonRegular = styled.button`
   margin-left: auto;
-  color: #333;
-  background-color: transparent;
+  color: #5c6c7c;
+  background: linear-gradient(45deg, #b7d9f2 0%, #94c6e6 50%, #74accf 100%);
   padding: 12px 24px;
   cursor: pointer;
   font-size: 14px;
@@ -19,11 +21,11 @@ const ButtonRegular = styled.button`
   border-radius: 35px;
   transition: all 200ms linear;
   box-shadow: 0px 0px 15px #e4e4e4;
-  
+
 
   &:hover {
-    color: #202129;
-    background-color: #e1e2e2;
+    color: #ffffff;
+    background: linear-gradient(45deg, #8bc8f7 0%, #72b0e3 50%, #4d94b7 100%);
   }
 
   &:active {
@@ -37,18 +39,16 @@ const ButtonRegular = styled.button`
 
 
 type PropsType = {
-    setDepartmentValue: (departmentValue: string) => void
-    setAuthorValue: (authorValue: string) => void
     handleDepartmentChange: (department: string) => void
     handleAuthorChange: (author: string) => void
     handleSearchChange: (title: string) => void
-    setTitle: (title: string) => void
-    test: (DepartmentValue: string, AuthorValue: string) => void
+    setSearchTitle: (title: string) => void
+    searchTitle: string
 }
 
 export const Select = (props: PropsType) => {
 
-    const department = [
+    const departSelect = [
         {name: 'Общий отдел'},
         {name: 'Отдел обеспечения'},
         {name: 'Отдел цифоровой трансформации'},
@@ -61,7 +61,7 @@ export const Select = (props: PropsType) => {
         {name: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности'},
     ]
 
-    const authors = [
+    const authorsSelect = [
         {name: 'Баландина Ирина Михайловна'},
         {name: 'Ткач Анна Евгеньевна'},
         {name: 'Амелин Анатолий Сергеевич'},
@@ -76,27 +76,28 @@ export const Select = (props: PropsType) => {
 
 
     const onChangeDepartment = (event: ChangeEvent<HTMLSelectElement>) => {
-        props.setDepartmentValue(event.currentTarget.value);
         props.handleDepartmentChange(event.currentTarget.value)
     };
 
     const onChangeAuthor = (event: ChangeEvent<HTMLSelectElement>) => {
-        props.setAuthorValue(event.currentTarget.value);
         props.handleAuthorChange(event.currentTarget.value)
     };
     const clearFilters = () => {
-        props.setDepartmentValue('');
-        props.setAuthorValue('');
+        props.setSearchTitle('')
         props.handleSearchChange('')
-        props.setTitle('')
-        props.test('', '')
+        props.handleAuthorChange('')
+        props.handleDepartmentChange('')
     }
 
 
     return (
         <SelectContainer>
-            <UniversalSelect title={'Отдел'} date={department} onChange={onChangeDepartment}/>
-            <UniversalSelect title={'Автор'} date={authors} onChange={onChangeAuthor}/>
+            <UniversalSelect title={'Отдел'} date={departSelect} onChange={onChangeDepartment}/>
+            <UniversalSelect title={'Автор'} date={authorsSelect} onChange={onChangeAuthor}/>
+            <Search handleSearchChange={props.handleSearchChange}
+                    searchTitle={props.searchTitle}
+                    setSearchTitle={props.setSearchTitle}
+            />
             <ButtonRegular onClick={clearFilters}>Очистить</ButtonRegular>
         </SelectContainer>
     );
