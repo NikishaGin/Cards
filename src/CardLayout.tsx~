@@ -208,13 +208,25 @@ const CardLayout = (props: CardLayoutProps) => {
         return filteredCards.slice(startIndex, startIndex + pageSize);
     };
 
-    const downloadFile = (filePath: string) => {
-        const link = document.createElement('a');
-        link.href = filePath;
-        link.download = 'file';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    const downloadFile = (filePath: any, fileName: string) => {
+        if (typeof filePath === 'string'){
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+
+
+        } else{
+            const url = URL.createObjectURL(filePath);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
      };
 
 
@@ -245,7 +257,7 @@ const CardLayout = (props: CardLayoutProps) => {
                         <Overlay/>
                         <CardTitle>{card.title}</CardTitle>
 
-                        <ButtonDownload onClick={() => {downloadFile(fileD)}}><img src={downIcon}/></ButtonDownload>
+                        <ButtonDownload onClick={() => {downloadFile(card.file, card.title)}}><img src={downIcon}/></ButtonDownload>
 
                         <ButtonPreview onClick={() => {
                             window.open(fileD, '_blank');

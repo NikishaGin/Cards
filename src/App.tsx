@@ -3,6 +3,7 @@ import styled, {createGlobalStyle} from "styled-components";
 import {useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
 import {v1} from "uuid";
+import fileD from './assets/fileBD/ФНС.pdf'
 
 
 const GlobalStyle = createGlobalStyle`
@@ -52,7 +53,7 @@ export const App = () => {
             author: 'Баландина Ирина Михайловна',
             department: 'Отдел разработки и развития сервисов',
             image: '../src/assets/imgBD/imageBD1.png',
-            file: './assets/fileBD/fileBD1.pdf'
+            file: fileD
         },
         {
             id: v1(),

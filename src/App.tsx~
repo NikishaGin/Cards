@@ -52,7 +52,7 @@ export const App = () => {
             author: 'Баландина Ирина Михайловна',
             department: 'Отдел разработки и развития сервисов',
             image: '../src/assets/imgBD/imageBD1.png',
-            file: './src/assets/fileBD/fileBD1.pdf'
+            file: './assets/fileBD/ФНС.pdf'
         },
         {
             id: v1(),
