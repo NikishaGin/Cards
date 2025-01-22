@@ -1,119 +1,157 @@
 import styled from "styled-components";
-import {Heading} from "./components/Heading";
-import {Search} from "./components/Search";
 import {useState} from "react";
 import {Pagination} from "./components/Pagination";
-import {Select} from "./components/Select";
-import pdfIcon from './assets/filetype-pdf.svg'
+import {Select} from "./components/Select"
+import eyeIcon from './assets/eye-fill.svg'
+import downIcon from './assets/download.svg'
 
 
 const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 200px);
-  gap: 25px;
-  margin: 2rem 0;
-  perspective: 1000px; /* Задаёт глубину перспективы */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 25px;
+    margin: 2rem 0;
+    perspective: 1000px; /* Задаёт глубину перспективы */
 `;
 
 const Card = styled.div`
-  position: relative;
-  width: 300px;
-  height: 200px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
-  background: #cedce7;
-  transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
+    position: relative;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+    background: #cedce7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
 
-  &:hover {
-    transform: translateY(-10px); /* Поднимает карточку вверх */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Увеличивает тень */
-  }
+    &:hover {
+        transform: translateY(-10px); /* Поднимает карточку вверх */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Увеличивает тень */
+    }
 `;
 
 const BackgroundImage = styled.img`
-  position: absolute; /* Абсолютное позиционирование */
-  top: 0;
-  left: 0;
-  width: 100%; /* Занимает всю ширину контейнера */
-  height: 100%; /* Занимает всю высоту контейнера */
-  object-fit: cover; /* Изображение полностью заполняет контейнер */
-  object-position: center; /* Центрирует изображение внутри контейнера */
-  z-index: 1; /* Располагается ниже текста */
+    position: absolute; /* Абсолютное позиционирование */
+    top: 0;
+    left: 0;
+    width: 100%; /* Занимает всю ширину контейнера */
+    height: 100%; /* Занимает всю высоту контейнера */
+    object-fit: cover; /* Изображение полностью заполняет контейнер */
+    object-position: center; /* Центрирует изображение внутри контейнера */
+    z-index: 1; /* Располагается ниже текста */
 `;
 
 const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Полупрозрачное затемнение */
-  z-index: 2; /* Между изображением и текстом */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Полупрозрачное затемнение */
+    z-index: 2; /* Между изображением и текстом */
 `;
 
-const CardTitle = styled.h3`
-  position: relative;
-  z-index: 3; /* Располагается выше изображения и затемнения */
-  padding: 10px;
-  color: white; /* Белый цвет текста для контраста */
-  border-radius: 8px;
-  margin: auto;
+const CardTitle = styled.h1`
+    position: relative;
+    z-index: 3; /* Располагается выше изображения и затемнения */
+    padding: 10px;
+    border-radius: 8px;
+    margin: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    font-size: 24px;
+    font-weight: 200;
+    color: whitesmoke;
+    text-shadow: 0px 0px 5px black;
 `;
 
-const CardBtn = styled.button`
-  position: relative;
-  z-index: 3;
-`
+const ButtonDownload = styled.div`
+    position: absolute;
+    bottom: 10px;
+    z-index: 3;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #8bc8f7;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, left 0.3s;
+    box-shadow: 0px 0px 15px #e4e4e4;
+    left: -300px;
 
+    ${Card}:hover & {
+        left: 10px;
+    }
 
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    }
 
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+`;
 
-const UploadFileBtn = styled.div`
-  position: absolute;
-  display: flex;
-  width: 30px;
-  height: 30px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: #4de84d;
-  cursor: pointer;
-  outline: none;
-  margin-right: -250px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+const ButtonPreview = styled.div`
+    position: absolute;
+    bottom: 10px;
+    z-index: 3;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #8bc8f7;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, right 0.3s;
+    box-shadow: 0px 0px 15px #e4e4e4;
+    right: -300px;
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-  }
+    ${Card}:hover & {
+        right: 10px;
+    }
 
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  }
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
 `
 
 const DisplayFilter = styled.div`
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 `
 const FilterDisplay = styled.span`
-  display: flex;
-  gap: 10px;
-  padding: 12px 24px;
-  cursor: pointer;
-  font-size: 14px;
-  border: none;
-  border-radius: 35px;
-  color: #202129;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
-  outline: 1px dotted #808080;
-  background: transparent;
+    display: flex;
+    gap: 10px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    border-radius: 35px;
+    color: #202129;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
+    outline: 1px dotted #808080;
+    background: transparent;
 `
 
 
@@ -170,12 +208,6 @@ const CardLayout = (props: CardLayoutProps) => {
     };
 
 
-    const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
-
-    const handleMouseEnter = (index: string) => setHoveredIndex(index)
-    const handleMouseLeave = () => setHoveredIndex(null)
-
-
     return (
         <>
             {/*<Heading/>*/}
@@ -197,30 +229,26 @@ const CardLayout = (props: CardLayoutProps) => {
             </DisplayFilter>
             <GridContainer>
                 {getCurrentPageCards().map((card) => (
-                    <Card key={card.id} src={card.image}>
+
+                    <Card key={card.id}>
                         <BackgroundImage src={card.image}/>
-                        <Overlay />
+                        <Overlay/>
                         <CardTitle>{card.title}</CardTitle>
-                        <CardBtn>Скачать</CardBtn>
-                        {/*<CardImage src={card.image} onClick={() => {*/}
-                        {/*    const url = URL.createObjectURL(card.file);*/}
-                        {/*    window.open(url, '_blank');*/}
-                        {/*    URL.revokeObjectURL(url);*/}
-                        {/*}} onMouseEnter={() => handleMouseEnter(card.id)} onMouseLeave={handleMouseLeave}*/}
-                        {/*/>*/}
 
+                        <ButtonDownload onClick={() => {
+                            const url = URL.createObjectURL(card.file);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = card.file.name;
+                            link.click();
+                            URL.revokeObjectURL(url);
+                        }}><img src={downIcon}/></ButtonDownload>
 
-                        {/*<CardTitle>{card.title}</CardTitle>*/}
-                        {/*{hoveredIndex === card.id && <UploadFileBtn onClick={() => {*/}
-                        {/*    const url = URL.createObjectURL(card.file);*/}
-                        {/*    const link = document.createElement('a');*/}
-                        {/*    link.href = url;*/}
-                        {/*    link.download = card.file.name;*/}
-                        {/*    link.click();*/}
-                        {/*    URL.revokeObjectURL(url);*/}
-                        {/*}}>*/}
-                        {/*    <img src={pdfIcon}/>*/}
-                        {/*</UploadFileBtn>}*/}
+                        <ButtonPreview onClick={() => {
+                            const url = URL.createObjectURL(card.file);
+                            window.open(url, '_blank');
+                            URL.revokeObjectURL(url);
+                        }}><img src={eyeIcon}/></ButtonPreview>
                     </Card>
                 ))}
             </GridContainer>

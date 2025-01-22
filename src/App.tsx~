@@ -87,7 +87,8 @@ export const App = () => {
             description: 'Описание',
             author: 'Истомин Сергей Юрьевич',
             department: 'Аналитический отдел',
-            image: '../src/assets/imgBD/imageBD5.jpg',
+            image: '../src/assets/imgBD/imageBD5.jpg' +
+                '',
             file: ''
         },
         {

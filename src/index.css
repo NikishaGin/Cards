@@ -66,3 +66,9 @@
 /*    background-color: #f9f9f9;*/
 /*  }*/
 /*}*/
+@font-face {
+    font-family: "Faberge";
+    src: local("Faberge"),
+    url("./assets/fonts/ofont.ru_Faberge.ttf") format("truetype");
+    font-weight: normal;
+}

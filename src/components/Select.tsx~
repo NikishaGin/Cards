@@ -21,7 +21,6 @@ const ButtonRegular = styled.button`
     border-radius: 35px;
     transition: all 200ms linear;
     box-shadow: 0px 0px 15px #e4e4e4;
-    font-family: 'Montserrat';
 
 
     &:hover {
