@@ -311,6 +311,7 @@ export function Modalwindow(props: PropsType) {
     }
     const closeModal = () => {
         setIsModalOpen(false)
+        console.log(selectedFile)
         setTitleText('')
         setSelectedDepart('')
         setSelectedAutors('')

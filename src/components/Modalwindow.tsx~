@@ -317,7 +317,6 @@ export function Modalwindow(props: PropsType) {
         setdescriptionText('')
         setImage('')
         setSelectedFile(null)
-        console.log(descriptionText)
         window.scroll({
             top: 0,
             behavior: 'smooth', // Плавная анимация

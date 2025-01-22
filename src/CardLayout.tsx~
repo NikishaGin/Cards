@@ -208,10 +208,10 @@ const CardLayout = (props: CardLayoutProps) => {
         return filteredCards.slice(startIndex, startIndex + pageSize);
     };
 
-    const downloadFile = (filePath: string, fileName: string) => {
+    const downloadFile = (filePath: string) => {
         const link = document.createElement('a');
         link.href = filePath;
-        link.download = fileName;
+        link.download = 'file';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -245,7 +245,7 @@ const CardLayout = (props: CardLayoutProps) => {
                         <Overlay/>
                         <CardTitle>{card.title}</CardTitle>
 
-                        <ButtonDownload onClick={() => {downloadFile(fileD, card.title)}}><img src={downIcon}/></ButtonDownload>
+                        <ButtonDownload onClick={() => {downloadFile(fileD)}}><img src={downIcon}/></ButtonDownload>
 
                         <ButtonPreview onClick={() => {
                             window.open(fileD, '_blank');

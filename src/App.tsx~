@@ -52,7 +52,7 @@ export const App = () => {
             author: 'Баландина Ирина Михайловна',
             department: 'Отдел разработки и развития сервисов',
             image: '../src/assets/imgBD/imageBD1.png',
-            file: ''
+            file: './src/assets/fileBD/fileBD1.pdf'
         },
         {
             id: v1(),
@@ -78,7 +78,7 @@ export const App = () => {
             description: 'Описание',
             author: 'Воронина Светлана Владимировна',
             department: 'Отдел информационной безопасности и информационных технологий',
-            image: '../src/assets/imgBD/image4BD.jpeg',
+            image: '../src/assets/imgBD/imageBD4.jpeg',
             file: ''
         },
         {
@@ -87,8 +87,7 @@ export const App = () => {
             description: 'Описание',
             author: 'Истомин Сергей Юрьевич',
             department: 'Аналитический отдел',
-            image: '../src/assets/imgBD/imageBD5.jpg' +
-                '',
+            image: '../src/assets/imgBD/imageBD5.jpg',
             file: ''
         },
         {
