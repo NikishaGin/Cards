@@ -48,8 +48,6 @@ const BannerDescription = styled.div`
     font-size: 14px;
     font-family: 'Montserrat';
 `;
-
-
 //кнопка для вызова модального окна
 const Button = styled.div`
     padding: 10px 20px;
@@ -161,12 +159,7 @@ const Presname = styled.input`
     font-family: 'Montserrat';
 `
 //Контейнер кнопок загрузки изображения и файла
-const UploadImageBtnContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 70px;
-`
+
 //кнопки загрузки изображения и файла
 const UploadImageBtn = styled.div`
     display: flex;
@@ -311,7 +304,6 @@ export function Modalwindow(props: PropsType) {
     }
     const closeModal = () => {
         setIsModalOpen(false)
-        console.log(selectedFile)
         setTitleText('')
         setSelectedDepart('')
         setSelectedAutors('')

@@ -260,10 +260,13 @@ const CardLayout = (props: CardLayoutProps) => {
                         <ButtonDownload onClick={() => {downloadFile(card.file, card.title)}}><img src={downIcon}/></ButtonDownload>
 
                         <ButtonPreview onClick={() => {
-                            const url = URL.createObjectURL(card.file);
-                            window.open(url, '_blank');
-                            URL.revokeObjectURL(url);
-                            // window.open(card.file, '_blank');
+                            if (typeof card.file === 'string'){
+                                window.open(card.file, '_blank');
+                            } else {
+                                const url = URL.createObjectURL(card.file);
+                                window.open(url, '_blank');
+                                URL.revokeObjectURL(url);
+                            }
                         }}><img src={eyeIcon}/></ButtonPreview>
                     </Card>
                 ))}

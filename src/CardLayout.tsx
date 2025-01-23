@@ -4,7 +4,6 @@ import {Pagination} from "./components/Pagination";
 import {Select} from "./components/Select"
 import eyeIcon from './assets/eye-fill.svg'
 import downIcon from './assets/download.svg'
-import fileD from './assets/fileBD/ФНС.pdf'
 
 
 const GridContainer = styled.div`

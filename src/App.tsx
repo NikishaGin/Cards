@@ -1,9 +1,10 @@
 import CardLayout, {CardData} from "./CardLayout";
 import styled, {createGlobalStyle} from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
 import {v1} from "uuid";
 import fileD from './assets/fileBD/ФНС.pdf'
+import {cardsApi} from "./api";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -45,6 +46,13 @@ const Container = styled.div`
 
 export const App = () => {
 
+    useEffect(() => {
+        cardsApi.getCards()
+            .then((response)=> console.log(response.data))
+    }, [])
+
+
+
     const [cards, setCards] = useState<CardData[]>([
         {
             id: v1(),
@@ -79,7 +87,7 @@ export const App = () => {
             description: 'Описание',
             author: 'Воронина Светлана Владимировна',
             department: 'Отдел информационной безопасности и информационных технологий',
-            image: '../src/assets/imgBD/imageBD4.jpeg',
+            image: '../src/assets/imgBD/imageBD4.png',
             file: ''
         },
         {
