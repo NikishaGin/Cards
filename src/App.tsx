@@ -46,10 +46,10 @@ const Container = styled.div`
 
 export const App = () => {
 
-    useEffect(() => {
-        cardsApi.getCards()
-            .then((response)=> console.log(response.data))
-    }, [])
+    // useEffect(() => {
+    //     cardsApi.getCards()
+    //         .then((response)=> console.log(response.data))
+    // }, [])
 
 
 
@@ -173,9 +173,11 @@ export const App = () => {
 
 
     //добавление презентации в бд
-    const addPost = (title: string, description: string, author: string, department: string, image: string, file: string) => {
-        const newPost: CardData = {id: v1(), title, description, author, department, image, file}
-        setCards([newPost, ...cards])
+    const addPost = (title: string, description: string, author: string, department: string, image: string, file: any) => {
+        // const newPost: CardData = {id: v1(), title, description, author, department, image, file}
+        // setCards([newPost, ...cards]
+        cardsApi.createCards(title, description, author, department, image, file)
+            .then((res)=> console.log('ответ', res))
     }
 
     return (

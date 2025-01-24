@@ -24,7 +24,6 @@ const Container = styled.div`
     background: linear-gradient(45deg, #0056b3 0%, #4f6f8f 100%);
 
 `;
-
 //Баннер
 const BannerContainer = styled.div`
     display: flex;
@@ -245,6 +244,12 @@ const PreviewImage = styled.img`
     border-radius: 10px;
     border: 2px solid #ddd;
 `;
+const UploadImageBtnContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 70px;
+`
 // Анимации иконки успешной отправки
 const slideDown = keyframes`
     from {
@@ -281,7 +286,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string, file: string) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string, file: any) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
