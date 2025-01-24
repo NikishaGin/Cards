@@ -286,7 +286,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string, file: File) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string, file: any) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
