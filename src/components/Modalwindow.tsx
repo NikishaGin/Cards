@@ -343,7 +343,7 @@ export function Modalwindow(props: PropsType) {
         setTitleText(e.currentTarget.value)
     }
     const [descriptionText, setdescriptionText] = useState('')
-    const onChangeDescriptionHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeDescriptionHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setdescriptionText(e.currentTarget.value)
     }
 
@@ -384,7 +384,7 @@ export function Modalwindow(props: PropsType) {
         selectedFile !== null
     )
     const onClickHandler = () => {
-        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, image, selectedFile)
+        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, image, selectedFile!)
         closeModal()
         handleClick()
     }

@@ -7,6 +7,7 @@ import fileD from './assets/fileBD/ФНС.pdf'
 import {cardsApi} from "./api";
 
 
+
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -173,11 +174,16 @@ export const App = () => {
 
 
     //добавление презентации в бд
-    const addPost = (title: string, description: string, author: string, department: string, image: string, file: any) => {
-        // const newPost: CardData = {id: v1(), title, description, author, department, image, file}
-        // setCards([newPost, ...cards]
+    const addPost = (title: string, description: string, author: string, department: string, image: string, file: File) => {
         cardsApi.createCards(title, description, author, department, image, file)
-            .then((res)=> console.log('ответ', res))
+            .then((res) => {
+                console.log('Ответ от сервера:', res.data);
+                setCards((prevCards) => [res.data, ...prevCards]);
+            })
+            .catch((error) => {
+                console.error('Ошибка при добавлении презентации:', error.message);
+                alert('Произошла ошибка при добавлении презентации. Пожалуйста, попробуйте снова.');
+            });
     }
 
     return (
