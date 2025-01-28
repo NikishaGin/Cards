@@ -286,7 +286,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string | undefined, file: File) => void
+    addPost: (title: string, description: string, author: string, department: string, file: File) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
@@ -366,7 +366,7 @@ export function Modalwindow(props: PropsType) {
     };
     //кнопка отправить
     const onClickHandler = () => {
-        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, image, selectedFile!)
+        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, selectedFile)
         closeModal()
         handleClick()
     }
@@ -376,7 +376,6 @@ export function Modalwindow(props: PropsType) {
         descriptionText !== '' &&
         selectedAutors !== '' &&
         descriptionText !== '' &&
-        image !== null &&
         selectedFile !== null
     )
 

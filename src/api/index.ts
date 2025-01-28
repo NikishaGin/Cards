@@ -11,13 +11,12 @@ export type CreateCardPayload = {
     description: string;
     author: string;
     department: string;
-    image: string;
     file: File;
 };
 
 export const cardsApi = {
-    createCards(title: string, description: string, author: string, department: string, image: string, file: File) {
-        return instance.post('upload', {title, description, author, department, image, file})
+    createCards(title: string, description: string, author: string, department: string, file: File) {
+        return instance.post('upload', {title, description, author, department, file})
     },
 
 }

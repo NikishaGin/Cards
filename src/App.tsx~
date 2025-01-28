@@ -175,8 +175,8 @@ export const App = () => {
 
 
     //добавление презентации в бд
-    const addPost = ((title: string, description: string, author: string, department: string, file: File) => {
-        const newPost: CardData = {id: v1(), title, description, author, department, file}
+    const addPost = ((title: string, description: string, author: string, department: string, image: string | undefined , file: File) => {
+        const newPost: CardData = {id: v1(), title, description, author, department, image, file}
         setCards([newPost, ...cards])})
 
         // const formData = new FormData();
