@@ -366,7 +366,7 @@ export function Modalwindow(props: PropsType) {
     };
     //кнопка отправить
     const onClickHandler = () => {
-        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, selectedFile)
+        props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, selectedFile!)
         closeModal()
         handleClick()
     }
@@ -376,6 +376,7 @@ export function Modalwindow(props: PropsType) {
         descriptionText !== '' &&
         selectedAutors !== '' &&
         descriptionText !== '' &&
+        image !== null &&
         selectedFile !== null
     )
 

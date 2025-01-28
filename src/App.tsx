@@ -4,8 +4,6 @@ import {useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
 import {v1} from "uuid";
 import fileD from './assets/fileBD/ФНС.pdf'
-//import {cardsApi} from "./api";
-import axios from "axios";
 
 
 
@@ -176,23 +174,19 @@ export const App = () => {
 
     //добавление презентации в бд
     const addPost = ((title: string, description: string, author: string, department: string, file: File) => {
-        const newPost: CardData = {id: v1(), title, description, author, department, file}
-        setCards([newPost, ...cards])})
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('department', department);
+        formData.append('author', author);
+        formData.append('descript', description);
+        formData.append('file', file);
+        console.log(title, description, author, department, file)
 
-        // const formData = new FormData();
-        // formData.append("title", title);
-        // formData.append("description", description);
-        // formData.append("authorID", author);
-        // formData.append("department", department);
-        // formData.append("image", image); // image должен быть объектом File
-        // formData.append("file", file);   // file должен быть объектом File
-        //
-        // return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data", // Указываем правильный заголовок
-        //     },
-        // });
-    // });
+        fetch('http://127.0.0.1:8000/api/upload/', {
+            method: 'POST',
+            body: formData,
+        })
+    });
 
     return (
         <Container>
