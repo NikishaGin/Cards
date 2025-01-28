@@ -14,7 +14,6 @@ const GridContainer = styled.div`
     margin: 2rem 0;
     perspective: 1000px; /* Задаёт глубину перспективы */
 `;
-
 const Card = styled.div`
     position: relative;
     width: 300px;
@@ -32,7 +31,6 @@ const Card = styled.div`
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Увеличивает тень */
     }
 `;
-
 const BackgroundImage = styled.img`
     position: absolute; /* Абсолютное позиционирование */
     top: 0;
@@ -43,7 +41,6 @@ const BackgroundImage = styled.img`
     object-position: center; /* Центрирует изображение внутри контейнера */
     z-index: 1; /* Располагается ниже текста */
 `;
-
 const Overlay = styled.div`
     position: absolute;
     top: 0;
@@ -53,7 +50,6 @@ const Overlay = styled.div`
     background: rgba(0, 0, 0, 0.4); /* Полупрозрачное затемнение */
     z-index: 2; /* Между изображением и текстом */
 `;
-
 const CardTitle = styled.h1`
     position: relative;
     z-index: 3; /* Располагается выше изображения и затемнения */
@@ -69,7 +65,6 @@ const CardTitle = styled.h1`
     color: whitesmoke;
     text-shadow: 0px 0px 5px black;
 `;
-
 const ButtonDownload = styled.div`
     position: absolute;
     bottom: 10px;
@@ -102,7 +97,6 @@ const ButtonDownload = styled.div`
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
 `;
-
 const ButtonPreview = styled.div`
     position: absolute;
     bottom: 10px;
@@ -135,7 +129,6 @@ const ButtonPreview = styled.div`
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
 `
-
 const DisplayFilter = styled.div`
     display: flex;
     gap: 20px;
@@ -159,8 +152,8 @@ export type CardData = {
     id: string;
     title: string;
     description: string;
-    image: string;
-    file: string;
+    image: string | undefined;
+    file: File;
     department: string;
     author: string
 }

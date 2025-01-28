@@ -286,24 +286,28 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string, file: File) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string | undefined, file: File) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
 
 
 export function Modalwindow(props: PropsType) {
+    const [isVisible, setIsVisible] = useState(false);//логика сообщения успешной отправки
+    const [isModalOpen, setIsModalOpen] = useState(false);//логика модального окна
+    const [selectedDepart, setSelectedDepart] = useState(''); //выпадающий список отдела
+    const [selectedAutors, setSelectedAutors] = useState(''); //выпадающий список автора
+    const [titleText, setTitleText] = useState(''); //название презентации
+    const [descriptionText, setdescriptionText] = useState(''); // описание презентации
+    const [image, setImage] = useState<string | undefined>(undefined); //картинка презентация
+    const [selectedFile, setSelectedFile] = useState<File | null>(null); //файл презентация
 
-//логика сообщения успешной отправки
-    const [isVisible, setIsVisible] = useState(false);
+    //логика сообщения успешной отправки
     const handleClick = () => {
         setIsVisible(true);
         setTimeout(() => setIsVisible(false), 2000);
     };
-
-
     //логика модального окна
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);
     }
@@ -313,7 +317,7 @@ export function Modalwindow(props: PropsType) {
         setSelectedDepart('')
         setSelectedAutors('')
         setdescriptionText('')
-        setImage('')
+        setImage(undefined)
         setSelectedFile(null)
         window.scroll({
             top: 0,
@@ -328,66 +332,53 @@ export function Modalwindow(props: PropsType) {
     // };
 
     //логика выпадающих списков
-    const [selectedDepart, setSelectedDepart] = useState('');
-    const [selectedAutors, setSelectedAutors] = useState('');
     const handleItemClickDeparts = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedDepart(e.target.value);
     };
     const handleItemClickAutors = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedAutors(e.target.value);
     };
-
-    //название и описание презентации
-    const [titleText, setTitleText] = useState('')
+    //название презентации
     const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitleText(e.currentTarget.value)
     }
-    const [descriptionText, setdescriptionText] = useState('')
+    //описание презентации
     const onChangeDescriptionHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setdescriptionText(e.currentTarget.value)
     }
-
-    //загрузка фотографии и файла
-    const [image, setImage] = useState<string | ''>('');
+    //загрузка фотографии
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const isValidFormat = file.type === "image/png" || file.type === "image/jpeg";
-            if (!isValidFormat) {
-                setImage('');
-                return;
-            }
-
             const reader = new FileReader();
             reader.onload = () => {
                 setImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            }
+            reader.readAsDataURL(file)
         }
     };
-
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    //загрузка файла
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             setSelectedFile(file);
         }
     };
-
-    //отправка данных в бд
-    const bthcheck = (
-        titleText !== '' &&
-        descriptionText !== '' &&
-        selectedAutors !== '' &&
-        descriptionText !== '' &&
-        image !== '' &&
-        selectedFile !== null
-    )
+    //кнопка отправить
     const onClickHandler = () => {
         props.addPost(titleText, descriptionText, selectedAutors, selectedDepart, image, selectedFile!)
         closeModal()
         handleClick()
     }
+    //проверка для активации кнопки
+    const bthcheck = (
+        titleText !== '' &&
+        descriptionText !== '' &&
+        selectedAutors !== '' &&
+        descriptionText !== '' &&
+        image !== null &&
+        selectedFile !== null
+    )
 
     return (
         <Container>
@@ -431,6 +422,7 @@ export function Modalwindow(props: PropsType) {
                                     ))}
                                 </Dropdown>
                             </InputContainer>
+
                             {/*выпадающий список авторы*/}
                             <InputContainer>
                                 <Dropdown id="select" value={selectedAutors} onChange={handleItemClickAutors}>
@@ -442,24 +434,24 @@ export function Modalwindow(props: PropsType) {
                                     ))}
                                 </Dropdown>
                             </InputContainer>
+
                             {/*описание презентации*/}
                             <Description placeholder="Описание"
                                          value={descriptionText}
                                          onChange={onChangeDescriptionHandler}>
 
                             </Description>
+
                             {/*загрузка фотогафии*/}
                             <UploadImageBtnContainer>
                                 <UploadImageBtn
-                                    onClick={() => document.getElementById("fileInput")?.click()}
-                                >
+                                    onClick={() => document.getElementById("fileInput")?.click()}>
                                     <img src={imgloadIcon}/>
                                 </UploadImageBtn>
 
                                 {/*загрузка файла*/}
                                 <UploadImageBtn
-                                    onClick={() => document.getElementById('file-input')?.click()}
-                                >
+                                    onClick={() => document.getElementById('file-input')?.click()}>
                                     <img src={uploadIcon}/>
                                 </UploadImageBtn></UploadImageBtnContainer>
                             {/*невидимые инпуты, открывающие проводник*/}
@@ -468,24 +460,24 @@ export function Modalwindow(props: PropsType) {
                                 type="file"
                                 accept="image/png, image/jpeg"
                                 style={{display: "none"}}
-                                onChange={handleImageChange}
-                            />
+                                onChange={handleImageChange}/>
                             <input
                                 type="file"
                                 accept=".pdf,.ppt,.pptx"
                                 style={{display: 'none'}}
                                 id="file-input"
-                                onChange={handleFileChange}
-                            />
+                                onChange={handleFileChange}/>
+
                             {/*название загруженного документа*/}
                             <div style={{display: 'flex'}}>{selectedFile &&
                                 <img src={pdfIcon} style={{height: '50px', width: '50px'}}/>}
                                 {selectedFile && <p>Документ: {selectedFile.name}</p>}</div>
 
                             {/*превью фотогафии*/}
-                            {image && <PreviewImage src={image} alt="Preview"/>}
+                            {image && <PreviewImage  src={image} alt="Preview"/>}
                             <p hidden={bthcheck} style={{color: "red", fontFamily: 'Montserrat'}}>Пожалуйста, заполните
                                 все поля</p>
+
                             {/*кнопки ОТМЕНА и СОХРАНИТЬ*/}
                             <ButtonContainer>
                                 <ButtonSendClose onClick={closeModal}>Отмена</ButtonSendClose>

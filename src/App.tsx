@@ -175,21 +175,24 @@ export const App = () => {
 
 
     //добавление презентации в бд
-    const addPost = ((title: string, description: string, author: string, department: string, image: string, file: File) => {
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("authorID", author);
-        formData.append("department", department);
-        formData.append("image", image); // image должен быть объектом File
-        formData.append("file", file);   // file должен быть объектом File
+    const addPost = ((title: string, description: string, author: string, department: string, image: string | undefined , file: File) => {
+        const newPost: CardData = {id: v1(), title, description, author, department, image, file}
+        setCards([newPost, ...cards])})
 
-        return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data", // Указываем правильный заголовок
-            },
-        });
-    });
+        // const formData = new FormData();
+        // formData.append("title", title);
+        // formData.append("description", description);
+        // formData.append("authorID", author);
+        // formData.append("department", department);
+        // formData.append("image", image); // image должен быть объектом File
+        // formData.append("file", file);   // file должен быть объектом File
+        //
+        // return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data", // Указываем правильный заголовок
+        //     },
+        // });
+    // });
 
     return (
         <Container>

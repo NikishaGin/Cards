@@ -286,7 +286,7 @@ type DepAuth = {
 }
 //тип для пропсов
 type PropsType = {
-    addPost: (title: string, description: string, author: string, department: string, image: string, file: any) => void
+    addPost: (title: string, description: string, author: string, department: string, image: string | undefined, file: File) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
 }
@@ -313,7 +313,7 @@ export function Modalwindow(props: PropsType) {
         setSelectedDepart('')
         setSelectedAutors('')
         setdescriptionText('')
-        setImage('')
+        setImage(undefined)
         setSelectedFile(null)
         window.scroll({
             top: 0,
@@ -348,23 +348,18 @@ export function Modalwindow(props: PropsType) {
     }
 
     //загрузка фотографии и файла
-    const [image, setImage] = useState<string | ''>('');
+    const [image, setImage] = useState<string | undefined>(undefined);
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const isValidFormat = file.type === "image/png" || file.type === "image/jpeg";
-            if (!isValidFormat) {
-                setImage('');
-                return;
-            }
-
             const reader = new FileReader();
             reader.onload = () => {
                 setImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            }
+            reader.readAsDataURL(file)
         }
     };
+
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -380,7 +375,7 @@ export function Modalwindow(props: PropsType) {
         descriptionText !== '' &&
         selectedAutors !== '' &&
         descriptionText !== '' &&
-        image !== '' &&
+        image !== null &&
         selectedFile !== null
     )
     const onClickHandler = () => {
@@ -483,7 +478,7 @@ export function Modalwindow(props: PropsType) {
                                 {selectedFile && <p>Документ: {selectedFile.name}</p>}</div>
 
                             {/*превью фотогафии*/}
-                            {image && <PreviewImage src={image} alt="Preview"/>}
+                            {image && <PreviewImage  src={image} alt="Preview"/>}
                             <p hidden={bthcheck} style={{color: "red", fontFamily: 'Montserrat'}}>Пожалуйста, заполните
                                 все поля</p>
                             {/*кнопки ОТМЕНА и СОХРАНИТЬ*/}
