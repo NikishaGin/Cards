@@ -4,6 +4,7 @@ import {Pagination} from "./components/Pagination";
 import {Select} from "./components/Select"
 import eyeIcon from './assets/eye-fill.svg'
 import downIcon from './assets/download.svg'
+import axios from "axios";
 
 
 const GridContainer = styled.div`
@@ -221,6 +222,18 @@ const CardLayout = (props: CardLayoutProps) => {
         }
      };
 
+    //Отправка id карточки
+    const handleDownload = (id:string) => {
+        const idCard = {id};
+        fetch('http://127.0.0.1:8000/api/download/', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(idCard),
+        })
+    }
+
 
     return (
         <>
@@ -249,7 +262,10 @@ const CardLayout = (props: CardLayoutProps) => {
                         <Overlay/>
                         <CardTitle>{card.title}</CardTitle>
 
-                        <ButtonDownload onClick={() => {downloadFile(card.file, card.title)}}><img src={downIcon}/></ButtonDownload>
+                        <ButtonDownload onClick={() =>
+                        {handleDownload(card.id)}}>
+                            <img src={downIcon}/>
+                        </ButtonDownload>
 
                         <ButtonPreview onClick={() => {
                             if (typeof card.file === 'string'){
