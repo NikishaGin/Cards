@@ -4,7 +4,7 @@ import {Pagination} from "./components/Pagination";
 import {Select} from "./components/Select"
 import eyeIcon from './assets/eye-fill.svg'
 import downIcon from './assets/download.svg'
-import axios from "axios";
+
 
 
 const GridContainer = styled.div`
@@ -160,7 +160,6 @@ export type CardData = {
 }
 
 type CardLayoutProps = {
-    cards: CardData [];
     addPost: (title: string, description: string, author: string, department: string, file: File) => void
 }
 

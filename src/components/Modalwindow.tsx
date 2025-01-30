@@ -289,6 +289,10 @@ type PropsType = {
     addPost: (title: string, description: string, author: string, department: string, file: File) => void
     department: Array<DepAuth>
     authors: Array<DepAuth>
+    image: File | null
+    setImage:(selectedFile: File | null) => void
+    uploadStatus: string
+    setUploadStatus: (uploadStatus: string) => void
 }
 
 
@@ -299,7 +303,7 @@ export function Modalwindow(props: PropsType) {
     const [selectedAutors, setSelectedAutors] = useState(''); //выпадающий список автора
     const [titleText, setTitleText] = useState(''); //название презентации
     const [descriptionText, setdescriptionText] = useState(''); // описание презентации
-    const [image, setImage] = useState<string | undefined>(undefined); //картинка презентация
+    // const [image, setImage] = useState<string | undefined>(undefined); //картинка презентация
     const [selectedFile, setSelectedFile] = useState<File | null>(null); //файл презентация
 
     //логика сообщения успешной отправки
@@ -317,7 +321,7 @@ export function Modalwindow(props: PropsType) {
         setSelectedDepart('')
         setSelectedAutors('')
         setdescriptionText('')
-        setImage(undefined)
+        props.setImage(null)
         setSelectedFile(null)
         window.scroll({
             top: 0,
@@ -347,16 +351,28 @@ export function Modalwindow(props: PropsType) {
         setdescriptionText(e.currentTarget.value)
     }
     //загрузка фотографии
+    // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = event.target.files?.[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             setImage(reader.result as string);
+    //         }
+    //         reader.readAsDataURL(file)
+    //     }
+    // };
+
+
+    // const [uploadStatus, setUploadStatus] = useState<string>('');
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImage(reader.result as string);
-            }
-            reader.readAsDataURL(file)
+        if (event.target.files && event.target.files.length > 0) {
+            props.setImage(event.target.files[0]);
+            props.setUploadStatus(''); // Сбросить статус загрузки при выборе нового файла
         }
     };
+
+
+
     //загрузка файла
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -376,7 +392,7 @@ export function Modalwindow(props: PropsType) {
         descriptionText !== '' &&
         selectedAutors !== '' &&
         descriptionText !== '' &&
-        image !== null &&
+        props.image !== null &&
         selectedFile !== null
     )
 
@@ -474,7 +490,7 @@ export function Modalwindow(props: PropsType) {
                                 {selectedFile && <p>Документ: {selectedFile.name}</p>}</div>
 
                             {/*превью фотогафии*/}
-                            {image && <PreviewImage  src={image} alt="Preview"/>}
+                            {props.image && <PreviewImage   alt="Preview"/>}
                             <p hidden={bthcheck} style={{color: "red", fontFamily: 'Montserrat'}}>Пожалуйста, заполните
                                 все поля</p>
 

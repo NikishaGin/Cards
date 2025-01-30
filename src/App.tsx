@@ -1,11 +1,7 @@
-import CardLayout, {CardData} from "./CardLayout";
+import CardLayout from "./CardLayout";
 import styled, {createGlobalStyle} from "styled-components";
 import {useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
-import {v1} from "uuid";
-import fileD from './assets/fileBD/ФНС.pdf'
-//import {cardsApi} from "./api";
-import axios from "axios";
 
 
 
@@ -55,98 +51,6 @@ export const App = () => {
 
 
 
-    const [cards, setCards] = useState<CardData[]>([
-        {
-            id: v1(),
-            title: 'Презентация: Будущее технологий',
-            description: 'Описание',
-            author: 'Баландина Ирина Михайловна',
-            department: 'Отдел разработки и развития сервисов',
-            image: '../src/assets/imgBD/imageBD1.png',
-            file: fileD
-        },
-        {
-            id: v1(),
-            title: 'Анализ данных: Шаг за шагом',
-            description: 'Описание',
-            author: 'Ткач Анна Евгеньевна',
-            department: 'Отдел работы с производным долгом',
-            image: '../src/assets/imgBD/imageBD2.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Управление проектами: Лучшая практика',
-            description: 'Описание',
-            author: 'Амелин Анатолий Сергеевич',
-            department: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности',
-            image: '../src/assets/imgBD/imageBD3.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Мотивация команды: Секрет успеха',
-            description: 'Описание',
-            author: 'Воронина Светлана Владимировна',
-            department: 'Отдел информационной безопасности и информационных технологий',
-            image: '../src/assets/imgBD/imageBD4.png',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Дизайн и инновации',
-            description: 'Описание',
-            author: 'Истомин Сергей Юрьевич',
-            department: 'Аналитический отдел',
-            image: '../src/assets/imgBD/imageBD5.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Стратегии роста компании',
-            description: 'Описание',
-            author: 'Затеев Андрей Николаевич',
-            department: 'Отдел сопровождения ЕНС',
-            image: '../src/assets/imgBD/imageBD6.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Современные тренды UX/UI',
-            description: 'Описание',
-            author: 'Шувалов Михаил Юрьевичв',
-            department: 'Отдел цифоровой трансформации',
-            image: '../src/assets/imgBD/imageBD7.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Кибербезопасность: Основы',
-            description: 'Описание',
-            author: 'Либик Елена Вячеславовна',
-            department: 'Отдел обеспечения',
-            image: '../src/assets/imgBD/imageBD8.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Эффективная коммуникация',
-            description: 'Описание',
-            author: 'Потапова Светлана Михайловна',
-            department: 'Общий отдел',
-            image: '../src/assets/imgBD/imageBD9.jpg',
-            file: ''
-        },
-        {
-            id: v1(),
-            title: 'Психология лидерства',
-            description: 'Описание',
-            author: 'Зарубина Анна Витальевна',
-            department: 'Отдел анализа больших данных',
-            image: '../src/assets/imgBD/imageBD10.jpeg',
-            file: ''
-        },
-    ])
 
     const department = [
         {name: 'Общий отдел'},
@@ -174,26 +78,60 @@ export const App = () => {
     ]
 
 
-    //добавление презентации в бд
-    const addPost = ((title: string, description: string, author: string, department: string, file: File) => {
-          const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("authorID", author);
-        formData.append("department", department);
-        formData.append("file", file);   // file должен быть объектом File
+    // //добавление презентации в бд
+    // const addPost = ((title: string, description: string, author: string, department: string, image: File, file: File) => {
+    //     // const formData = new FormData();
+    //     // formData.append('title', title);
+    //     // formData.append('department', department);
+    //     // formData.append('author', author);
+    //     // formData.append('descript', description);
+    //     // formData.append('image', image);
+    //     // formData.append('file', file);
+    //     // console.log(title, description, author, department, file)
+    //     //
+    //     //
+    //     // fetch('http://127.0.0.1:8000/api/upload/', {
+    //     //     method: 'POST',
+    //     //     body: formData,
+    //     // })
+    // });
 
-        fetch('http://127.0.0.1:8000/api/upload/', {
-            method: 'POST',
-            body: formData,
-        })
+    const [image, setImage] = useState<File | null>(null); //файл презентация
+    const [uploadStatus, setUploadStatus] = useState<string>('');
 
-        // return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data", // Указываем правильный заголовок
-        //     },
-        // });
-    });
+    const addPost = async (title: string, description: string, author: string, department: string, file: File) => {
+        if (!image) {
+            setUploadStatus('Выберите файл!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('descript', description);
+        formData.append('author', author);
+        formData.append('department', department);
+        formData.append('selectedFile', image);
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setUploadStatus('Файл успешно загружен');
+                console.log('Файл успешно загружен:', data);
+            } else {
+                setUploadStatus('Ошибка при загрузке файла');
+                console.error('Ошибка при загрузке файла');
+            }
+        } catch (error) {
+            setUploadStatus('Произошла ошибка');
+            console.error('Ошибка:', error);
+        }
+    };
 
 
     return (
@@ -202,10 +140,14 @@ export const App = () => {
                 addPost={addPost}
                 department={department}
                 authors={authors}
+
+                image={image}
+                setImage={setImage}
+                uploadStatus={uploadStatus}
+                setUploadStatus={setUploadStatus}
             />
             <GlobalStyle/>
             <CardLayout
-                cards={cards}
                 addPost={addPost}
             />
         </Container>
