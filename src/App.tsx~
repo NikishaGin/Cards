@@ -183,16 +183,16 @@ export const App = () => {
         formData.append("department", department);
         formData.append("file", file);   // file должен быть объектом File
 
-        fetch('http://127.0.0.1:8000/api/upload/', {
-            method: 'POST',
-            body: formData,
-        })
+        // fetch('http://127.0.0.1:8000/api/upload/', {
+        //     method: 'POST',
+        //     body: formData,
+        // })
 
-        // return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data", // Указываем правильный заголовок
-        //     },
-        // });
+        return axios.post("http://127.0.0.1:8000/api/upload/", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data", // Указываем правильный заголовок
+            },
+        });
     });
 
 
