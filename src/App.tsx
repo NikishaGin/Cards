@@ -204,7 +204,10 @@ export const App = () => {
                 authors={authors}
             />
             <GlobalStyle/>
-            <CardLayout cards={cards}/>
+            <CardLayout
+                cards={cards}
+                addPost={addPost}
+            />
         </Container>
     )
 }

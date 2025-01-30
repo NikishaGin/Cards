@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Pagination} from "./components/Pagination";
 import {Select} from "./components/Select"
 import eyeIcon from './assets/eye-fill.svg'
@@ -161,11 +161,51 @@ export type CardData = {
 
 type CardLayoutProps = {
     cards: CardData [];
+    addPost: (title: string, description: string, author: string, department: string, file: File) => void
 }
 
 const CardLayout = (props: CardLayoutProps) => {
 
-    // фильтрация карточек зависит от значения состояния поиска
+
+    const [items, setItems] = useState<CardData[]>([]);
+
+
+
+    //запрос карточек из БД
+    useEffect(() => {
+        const fetchItems = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/items');
+                if (!response.ok) {
+                    throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                setItems(data);
+            } catch (error:any) {
+                console.error('Ошибка загрузки данных:', error);
+            }
+        };
+        fetchItems();
+    }, [props.addPost]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// фильтрация карточек зависит от значения состояния поиска
     const [searchTitle, setSearchTitle] = useState<string>('');
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [selectedAuthor, setSelectedAuthor] = useState<string>('');
@@ -174,7 +214,7 @@ const CardLayout = (props: CardLayoutProps) => {
     const handleDepartmentChange = (department: string) => setSelectedDepartment(department.toLowerCase());
     const handleAuthorChange = (author: string) => setSelectedAuthor(author.toLowerCase());
 
-    const filteredCards = props.cards.filter(card => {
+    const filteredCards = items.filter(card => {
         return (
             (searchTitle === '' || card.title.toLowerCase().includes(searchTitle)) &&
             (selectedDepartment === '' || card.department.toLowerCase().includes(selectedDepartment)) &&
@@ -193,7 +233,7 @@ const CardLayout = (props: CardLayoutProps) => {
     const pageSize = 8; // Количество элементов на одной странице
 
     // Рассчитываем общее количество страниц для пагинации,
-    const totalPages = Math.ceil(props.cards.length / pageSize);
+    const totalPages = Math.ceil(items.length / pageSize);
 
     // Функция для получения карточек текущей страницы
     const getCurrentPageCards = () => {
@@ -202,37 +242,25 @@ const CardLayout = (props: CardLayoutProps) => {
     };
 
 
-    //Жесткий костыль для скачивания файла
-    const downloadFile = (filePath: any, fileName: string) => {
-        if (typeof filePath === 'string'){
-            const link = document.createElement('a');
-            link.href = filePath;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-        } else{
-            const url = URL.createObjectURL(filePath);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = fileName;
-            link.click();
-            URL.revokeObjectURL(url);
-        }
-     };
-
-    //Отправка id карточки
-    const handleDownload = (id:string) => {
-        const idCard = {id};
-        fetch('http://127.0.0.1:8000/api/download/', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(idCard),
-        })
-    }
+    const handleDownload = (id: string) => {
+        fetch(`http://127.0.0.1:8000/api/download/${id}/`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Ошибка при скачивании файла");
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `presentation_${id}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => console.error('Ошибка:', error));
+    };
 
 
     return (
