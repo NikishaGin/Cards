@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import styled, {keyframes} from 'styled-components';
 import uploadIcon from '../assets/upload.svg'
 import pdfIcon from '../assets/filetype-pdf.svg'
@@ -303,7 +303,6 @@ export function Modalwindow(props: PropsType) {
     const [selectedAutors, setSelectedAutors] = useState(''); //выпадающий список автора
     const [titleText, setTitleText] = useState(''); //название презентации
     const [descriptionText, setdescriptionText] = useState(''); // описание презентации
-    // const [image, setImage] = useState<string | undefined>(undefined); //картинка презентация
     const [selectedFile, setSelectedFile] = useState<File | null>(null); //файл презентация
 
     //логика сообщения успешной отправки
@@ -328,49 +327,31 @@ export function Modalwindow(props: PropsType) {
             behavior: 'smooth', // Плавная анимация
         })
     }
-    //закрывать модальное окно по клику мне него
-    // const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
-    //     if (e.target === e.currentTarget) {
-    //         closeModal();
-    //     }
-    // };
 
     //логика выпадающих списков
-    const handleItemClickDeparts = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleItemClickDeparts = (e:ChangeEvent<HTMLSelectElement>) => {
         setSelectedDepart(e.target.value);
     };
-    const handleItemClickAutors = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleItemClickAutors = (e:ChangeEvent<HTMLSelectElement>) => {
         setSelectedAutors(e.target.value);
     };
     //название презентации
-    const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeTitleHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setTitleText(e.currentTarget.value)
     }
     //описание презентации
-    const onChangeDescriptionHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const onChangeDescriptionHandler = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setdescriptionText(e.currentTarget.value)
     }
-    //загрузка фотографии
-    // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files?.[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             setImage(reader.result as string);
-    //         }
-    //         reader.readAsDataURL(file)
-    //     }
-    // };
 
 
-    // const [uploadStatus, setUploadStatus] = useState<string>('');
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            props.setImage(event.target.files[0]);
+    const handleImageChange = (e:ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files instanceof FileList && files.length > 0) {
+            props.setImage(files[0]);
             props.setUploadStatus(''); // Сбросить статус загрузки при выборе нового файла
         }
     };
-
 
 
     //загрузка файла
@@ -490,7 +471,7 @@ export function Modalwindow(props: PropsType) {
                                 {selectedFile && <p>Документ: {selectedFile.name}</p>}</div>
 
                             {/*превью фотогафии*/}
-                            {props.image && <PreviewImage   alt="Preview"/>}
+                            {props.image && <PreviewImage src={''}  alt="Preview"/>}
                             <p hidden={bthcheck} style={{color: "red", fontFamily: 'Montserrat'}}>Пожалуйста, заполните
                                 все поля</p>
 

@@ -1,7 +1,8 @@
-import CardLayout from "./CardLayout";
+import CardLayout from "./components/cardLayout/CardLayout";
 import styled, {createGlobalStyle} from "styled-components";
 import {useState} from "react";
 import {Modalwindow} from "./components/Modalwindow.tsx";
+import {CardFilterProvider} from "./context/CardFilterContext";
 
 
 
@@ -42,59 +43,32 @@ const Container = styled.div`
     margin: 0 auto;
 `
 
+export const department = [
+    {name: 'Общий отдел'},
+    {name: 'Отдел обеспечения'},
+    {name: 'Отдел цифоровой трансформации'},
+    {name: 'Отдел сопровождения ЕНС'},
+    {name: 'Отдел анализа больших данных'},
+    {name: 'Отдел информационной безопасности и информационных технологий'},
+    {name: 'Аналитический отдел'},
+    {name: 'Отдел разработки и развития сервисов'},
+    {name: 'Отдел работы с производным долгом'},
+    {name: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности'},
+]
+export const authors = [
+    {name: 'Баландина Ирина Михайловна'},
+    {name: 'Ткач Анна Евгеньевна'},
+    {name: 'Амелин Анатолий Сергеевич'},
+    {name: 'Воронина Светлана Владимировна'},
+    {name: 'Истомин Сергей Юрьевич'},
+    {name: 'Затеев Андрей Николаевич'},
+    {name: 'Шувалов Михаил Юрьевич'},
+    {name: 'Либик Елена Вячеславовна'},
+    {name: 'Потапова Светлана Михайловна'},
+    {name: 'Зарубина Анна Витальевна'},
+]
+
 export const App = () => {
-
-    // useEffect(() => {
-    //     cardsApi.getCards()
-    //         .then((response)=> console.log(response.data))
-    // }, [])
-
-
-
-
-    const department = [
-        {name: 'Общий отдел'},
-        {name: 'Отдел обеспечения'},
-        {name: 'Отдел цифоровой трансформации'},
-        {name: 'Отдел сопровождения ЕНС'},
-        {name: 'Отдел анализа больших данных'},
-        {name: 'Отдел информационной безопасности и информационных технологий'},
-        {name: 'Аналитический отдел'},
-        {name: 'Отдел разработки и развития сервисов'},
-        {name: 'Отдел работы с производным долгом'},
-        {name: 'Отдел кадров, профилактикикоррупционных и иных правонарушений и безопасности'},
-    ]
-    const authors = [
-        {name: 'Баландина Ирина Михайловна'},
-        {name: 'Ткач Анна Евгеньевна'},
-        {name: 'Амелин Анатолий Сергеевич'},
-        {name: 'Воронина Светлана Владимировна'},
-        {name: 'Истомин Сергей Юрьевич'},
-        {name: 'Затеев Андрей Николаевич'},
-        {name: 'Шувалов Михаил Юрьевич'},
-        {name: 'Либик Елена Вячеславовна'},
-        {name: 'Потапова Светлана Михайловна'},
-        {name: 'Зарубина Анна Витальевна'},
-    ]
-
-
-    // //добавление презентации в бд
-    // const addPost = ((title: string, description: string, author: string, department: string, image: File, file: File) => {
-    //     // const formData = new FormData();
-    //     // formData.append('title', title);
-    //     // formData.append('department', department);
-    //     // formData.append('author', author);
-    //     // formData.append('descript', description);
-    //     // formData.append('image', image);
-    //     // formData.append('file', file);
-    //     // console.log(title, description, author, department, file)
-    //     //
-    //     //
-    //     // fetch('http://127.0.0.1:8000/api/upload/', {
-    //     //     method: 'POST',
-    //     //     body: formData,
-    //     // })
-    // });
 
     const [image, setImage] = useState<File | null>(null); //файл презентация
     const [uploadStatus, setUploadStatus] = useState<string>('');
@@ -110,11 +84,11 @@ export const App = () => {
         formData.append('descript', description);
         formData.append('author', author);
         formData.append('department', department);
-        formData.append('selectedFile', image);
+        formData.append('image', image);
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:3000/upload', {
+            const response = await fetch('http://127.0.0.1:8000/api/upload/', {
                 method: 'POST',
                 body: formData,
             });
@@ -147,9 +121,9 @@ export const App = () => {
                 setUploadStatus={setUploadStatus}
             />
             <GlobalStyle/>
-            <CardLayout
-                addPost={addPost}
-            />
+            <CardFilterProvider>
+                <CardLayout addPost={addPost}/>
+            </CardFilterProvider>
         </Container>
     )
 }
